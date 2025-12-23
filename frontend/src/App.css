@@ -1,0 +1,13 @@
+/* Chat scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 2px;
+}
