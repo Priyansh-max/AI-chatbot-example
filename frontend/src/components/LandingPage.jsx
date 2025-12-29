@@ -1,6 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const LandingPage = () => {
+  const [serverTime, setServerTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setServerTime(new Date())
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit',
+      hour12: true 
+    })
+  }
+
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white">
       {/* Subtle gradient overlay */}
@@ -15,66 +33,121 @@ const LandingPage = () => {
             </div>
             <span className="font-['Syne'] font-semibold text-lg tracking-tight">Spur</span>
           </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm text-zinc-400 hover:text-white transition-colors">Features</a>
-            <a href="#about" className="text-sm text-zinc-400 hover:text-white transition-colors">About</a>
-            <a href="#contact" className="text-sm text-zinc-400 hover:text-white transition-colors">Contact</a>
+          <nav className="flex items-center gap-4">
+            {/* Resume */}
+            <a 
+              href="https://drive.google.com/file/d/1uyyTxK-cKZHcZ87UxFRkXqeH1Emo1TVD/view?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all"
+              title="Resume"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </a>
+            {/* LinkedIn */}
+            <a 
+              href="https://www.linkedin.com/in/priyanshagarwal01/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all"
+              title="LinkedIn"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            {/* GitHub */}
+            <a 
+              href="https://github.com/Priyansh-max" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all"
+              title="GitHub"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            {/* Portfolio */}
+            <a 
+              href="https://priyanshagarwal.me/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all"
+              title="Portfolio"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </a>
           </nav>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-24">
+      <section className="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-24">
         <div className="max-w-3xl stagger">
           <div className="animate-fadeUp opacity-0">
-            <span className="inline-block px-3 py-1 text-xs font-medium text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20 mb-6">
-              AI-Powered Support
+            <span className="inline-block px-3 py-1 text-xs font-normal text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20 mb-6">
+              Spur Hiring Assignment
             </span>
           </div>
-          <h1 className="animate-fadeUp opacity-0 font-['Syne'] text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+          <h1 className="animate-fadeUp opacity-0 font-['Syne'] text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
             The future of
             <br />
             <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
               customer support
             </span>
           </h1>
-          <p className="animate-fadeUp opacity-0 text-lg md:text-xl text-zinc-400 leading-relaxed mb-10 max-w-xl">
-            Experience seamless AI assistance. Get instant answers to your questions, 24/7.
+          <p className="animate-fadeUp opacity-0 text-md text-zinc-400 leading-relaxed mb-6 max-w-xl">
+            Experience seamless AI assistance<br /><span className="text-md italic text-zinc-400"> get started by clicking the chat button at the bottom right of the screen.</span><br />
           </p>
+
+          <ul className="animate-fadeUp opacity-0 text-md text-zinc-400 leading-relaxed mb-10 max-w-xl list-disc list-inside space-y-2">
+            <li>Instant responses</li>
+            <li>24/7 availability</li>
+            <li>Secure and private conversations</li>
+            <li>Access to past conversation history</li>
+          </ul>
+
           <div className="animate-fadeUp opacity-0 flex flex-wrap gap-4">
-            <button className="px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition-all duration-200 hover:scale-[1.02]">
-              Get Started
+            <button className="px-6 py-3 text-md bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition-all duration-200 hover:scale-[1.02]">
+              <a href="https://drive.google.com/file/d/1uyyTxK-cKZHcZ87UxFRkXqeH1Emo1TVD/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
             </button>
-            <button className="px-6 py-3 text-zinc-300 font-medium rounded-lg border border-white/10 hover:bg-white/5 transition-all duration-200">
-              Learn More
+            <button className="px-6 py-3 text-md text-zinc-300 font-medium rounded-lg border border-white/10 hover:bg-white/5 transition-all duration-200">
+              <a href="https://priyanshagarwal.me/" target="_blank" rel="noopener noreferrer">Portfolio</a>
             </button>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="relative z-10 border-t border-white/5 bg-[#111113]">
-        <div className="max-w-6xl mx-auto px-6 py-24">
+      {/* Why Hire Me */}
+      <section id="features" className="relative z-10">
+        <div className="max-w-6xl mx-auto px-6 py-12 pb-24">
           <div className="text-center mb-16">
-            <h2 className="font-['Syne'] text-3xl md:text-4xl font-bold mb-4">Why choose Spur?</h2>
-            <p className="text-zinc-400 max-w-md mx-auto">Everything you need for exceptional customer experience</p>
+            <h2 className="font-['Syne'] text-3xl md:text-4xl font-bold mb-4">Why hire me?</h2>
+            <p className="text-zinc-400 max-w-3xl mx-auto">Hi, I'm Priyansh Agarwal <span className="animate-pulse">👋</span>
+              <br />
+            I build AI systems, GenAI agents, and full-stack products, and I'm always curious about turning complex ideas into simple, usable experiences.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { 
                 icon: "M13 10V3L4 14h7v7l9-11h-7z",
-                title: "Lightning Fast",
-                desc: "Instant responses powered by advanced AI"
+                title: "Ship Fast",
+                desc: "I move quickly from idea to production. No overthinking, just clean, working code."
               },
               { 
-                icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
-                title: "Always Available",
-                desc: "24/7 support without wait times"
+                icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+                title: "Full-Stack Builder",
+                desc: "Frontend to backend, databases to deployment, I own the entire stack."
               },
               { 
-                icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
-                title: "Secure & Private",
-                desc: "Your data is always protected"
+                icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+                title: "Ownership Mindset",
+                desc: "I take full responsibility, from scoping to shipping, debugging to docs."
               }
             ].map((feature, i) => (
               <div 
@@ -94,63 +167,100 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* About */}
-      <section id="about" className="relative z-10 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-6 py-24">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="font-['Syne'] text-3xl md:text-4xl font-bold mb-6">
-                Built for modern
-                <br />
-                <span className="text-indigo-400">e-commerce</span>
-              </h2>
-              <p className="text-zinc-400 leading-relaxed mb-8">
-                Our AI understands your store's policies and provides accurate, helpful responses. Shipping info, return policies, product questions — handled instantly.
-              </p>
-              <div className="space-y-3">
-                {[
-                  "Free shipping on orders over $50",
-                  "30-day hassle-free returns",
-                  "Support hours: Mon-Fri, 9AM-6PM EST"
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm text-zinc-300">
-                    <div className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center">
-                      <svg className="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    {item}
+      {/* Proof of Work */}
+      <section className="relative z-10">
+        <div className="max-w-6xl mx-auto px-6 pb-32">
+          <div className="text-center mb-12">
+            <h2 className="font-['Syne'] text-md sm:text-2xl font-bold mb-2">Proof of Work</h2>
+            <p className="text-zinc-400 max-w-md text-sm mx-auto">Projects I've built that showcase my skills</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              {
+                title: "FindMyTeam",
+                desc: "A platform for finding open source projects and teams to collaborate and build a profile.",
+                tags: ["React", "Node.js", "Express", "PostgreSQL", "Redis"],
+                image: "/images/findmyteam.png",
+                link: "https://findmyteam.vercel.app/"
+              },
+              {
+                title: "SearchBot Agent",
+                desc: "AGenAI-powered platform that provide broweser automation tools that searcher the webs and brings details answer for you.",
+                tags: ["Python", "Playwright", "Browser Automation", "FastAPI"],
+                image: "/images/searchgpt.png",
+                link: "https://searchbot.live/"
+              },
+              {
+                title: "Gorilla vs 100Humans",
+                desc: "A fun game where you can compete be a gorilla and fight with 100 humans and find out who wins.",
+                tags: ["React", "Web Game", "AI Heuristic Bots", "HTML5", "Canvas", "JS"],
+                image: "/images/gorillavs100humans.png",
+                link: "https://www.gorillavs100humans.games/"
+              },
+              {
+                title: "RedditMastry",
+                desc: "A platform that generates high-impact Reddit posts and comment strategies to boost engagement and grow your brand.",
+                tags: ["React", "OpenAI", "Express", "PostgreSQL"],
+                image: "/images/redditmastry.png",
+                link: "https://redditmastry.vercel.app/"
+              }
+            ].map((project, i) => (
+              <div 
+                key={i}
+                className="group flex flex-col rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 overflow-hidden transition-all duration-300 hover:translate-y-[-4px]"
+              >
+                {/* Image */}
+                <div className="relative h-36 overflow-hidden bg-[#1a1a1d]">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                {/* Content */}
+                <div className="flex flex-col flex-1 p-4">
+                  <h3 className="font-['Syne'] font-semibold text-sm mb-1 group-hover:text-indigo-400 transition-colors">{project.title}</h3>
+                  <p className="text-xs text-zinc-500 mb-3 flex-1">{project.desc}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {project.tags.map((tag, j) => (
+                      <span key={j} className="px-2 py-0.5 text-[10px] rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-white/5 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center animate-float">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <a 
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors group/link"
+                  >
+                    <span>View Project</span>
+                    <svg className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </div>
-                  <p className="text-zinc-500 text-sm">Click the chat button to try it</p>
+                  </a>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="relative z-10 border-t border-white/5 bg-[#111113]">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-                <span className="font-bold text-xs">S</span>
-              </div>
-              <span className="font-['Syne'] font-semibold">Spur Store</span>
+      <footer id="contact" className="relative z-10 border-t border-white/5 bg-[#0a0a0b]">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <p className="text-sm text-zinc-500">
+            Made by <a href="https://priyanshagarwal.me/" target="_blank" rel="noopener noreferrer" className="text-zinc-300 hover:text-indigo-400 transition-colors">Priyansh Agarwal</a>
+          </p>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+              </span>
+              <span className="text-xs text-zinc-500">Server Active</span>
             </div>
-            <p className="text-sm text-zinc-500">© 2025 Spur. All rights reserved.</p>
+            <span className="text-xs text-zinc-400 font-mono">{formatTime(serverTime)}</span>
           </div>
         </div>
       </footer>
@@ -159,4 +269,3 @@ const LandingPage = () => {
 }
 
 export default LandingPage
-
