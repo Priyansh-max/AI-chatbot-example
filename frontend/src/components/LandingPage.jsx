@@ -1,7 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
+// Custom hook for scroll-based animations
+const useScrollAnimation = () => {
+  const ref = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.unobserve(entry.target)
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  return [ref, isVisible]
+}
 
 const LandingPage = () => {
   const [serverTime, setServerTime] = useState(new Date())
+  
+  // Refs for scroll animations
+  const [headerRef, headerVisible] = useScrollAnimation()
+  const [heroRef, heroVisible] = useScrollAnimation()
+  const [featuresRef, featuresVisible] = useScrollAnimation()
+  const [projectsRef, projectsVisible] = useScrollAnimation()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -25,7 +57,12 @@ const LandingPage = () => {
       <div className="fixed inset-0 bg-gradient-to-b from-indigo-950/20 via-transparent to-transparent pointer-events-none" />
       
       {/* Header */}
-      <header className="relative z-10 border-b border-white/5">
+      <header 
+        ref={headerRef}
+        className={`relative z-10 border-b border-white/5 transition-all duration-700 ${
+          headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-5'
+        }`}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
@@ -87,32 +124,35 @@ const LandingPage = () => {
       </header>
 
       {/* Hero */}
-      <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-24">
-        <div className="max-w-3xl stagger">
-          <div className="animate-fadeUp opacity-0">
+      <section 
+        ref={heroRef}
+        className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-24"
+      >
+        <div className="max-w-3xl">
+          <div className={`transition-all duration-700 delay-100 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block px-3 py-1 text-[10px] sm:text-xs font-normal text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20 mb-4 sm:mb-6">
               Spur Hiring Assignment
             </span>
           </div>
-          <h1 className="animate-fadeUp opacity-0 font-['Syne'] text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4 sm:mb-6">
+          <h1 className={`font-['Syne'] text-4xl sm:text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4 sm:mb-6 transition-all duration-700 delay-200 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             The future of
             <br />
             <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
               customer support
             </span>
           </h1>
-          <p className="animate-fadeUp opacity-0 text-sm sm:text-md text-zinc-400 leading-relaxed mb-4 sm:mb-6 max-w-xl">
+          <p className={`text-sm sm:text-md text-zinc-400 leading-relaxed mb-4 sm:mb-6 max-w-xl transition-all duration-700 delay-300 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Experience seamless AI assistance<br /><span className="text-sm sm:text-md italic text-zinc-400"> get started by clicking the chat button at the bottom right of the screen.</span>
           </p>
 
-          <ul className="animate-fadeUp opacity-0 text-sm sm:text-md text-zinc-400 leading-relaxed mb-8 sm:mb-10 max-w-xl list-disc list-inside space-y-1.5 sm:space-y-2">
+          <ul className={`text-sm sm:text-md text-zinc-400 leading-relaxed mb-8 sm:mb-10 max-w-xl list-disc list-inside space-y-1.5 sm:space-y-2 transition-all duration-700 delay-[400ms] ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <li>Instant responses</li>
             <li>24/7 availability</li>
             <li>Secure and private conversations</li>
             <li>Access to past conversation history</li>
           </ul>
 
-          <div className="animate-fadeUp opacity-0 flex flex-wrap gap-3 sm:gap-4">
+          <div className={`flex flex-wrap gap-3 sm:gap-4 transition-all duration-700 delay-500 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <a 
               href="https://drive.google.com/file/d/1uyyTxK-cKZHcZ87UxFRkXqeH1Emo1TVD/view?usp=sharing" 
               target="_blank" 
@@ -134,9 +174,13 @@ const LandingPage = () => {
       </section>
 
       {/* Why Hire Me */}
-      <section id="features" className="relative z-10">
+      <section 
+        ref={featuresRef}
+        id="features" 
+        className="relative z-10"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 pb-16 sm:pb-24">
-          <div className="text-center mb-10 sm:mb-16">
+          <div className={`text-center mb-10 sm:mb-16 transition-all duration-700 ${featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h2 className="font-['Syne'] text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Why hire me?</h2>
             <p className="text-sm sm:text-base text-zinc-400 max-w-3xl mx-auto px-4">Hi, I'm Priyansh Agarwal <span className="animate-pulse">👋</span>
               <br />
@@ -162,7 +206,10 @@ const LandingPage = () => {
             ].map((feature, i) => (
               <div 
                 key={i}
-                className="group p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300"
+                className={`group p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] transition-all duration-700 ${
+                  featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: featuresVisible ? `${200 + i * 100}ms` : '0ms' }}
               >
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-indigo-500/20 to-violet-500/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,9 +225,12 @@ const LandingPage = () => {
       </section>
 
       {/* Proof of Work */}
-      <section className="relative z-10">
+      <section 
+        ref={projectsRef}
+        className="relative z-10"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-24 sm:pb-32">
-          <div className="text-center mb-8 sm:mb-12">
+          <div className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${projectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h2 className="font-['Syne'] text-lg sm:text-xl md:text-2xl font-bold mb-2">Proof of Work</h2>
             <p className="text-zinc-400 max-w-md text-xs sm:text-sm mx-auto">Projects I've built that showcase my skills</p>
           </div>
@@ -189,35 +239,38 @@ const LandingPage = () => {
               {
                 title: "FindMyTeam",
                 desc: "A platform for finding open source projects and teams to collaborate and build a profile.",
-                tags: ["React", "Node.js", "PostgreSQL"],
+                tags: ["React", "Node.js", "PostgreSQL", "Redis", "Github API"],
                 image: "/images/findmyteam.png",
                 link: "https://findmyteam.vercel.app/"
               },
               {
                 title: "SearchBot Agent",
                 desc: "GenAI-powered platform with browser automation that searches the web and brings detailed answers.",
-                tags: ["Python", "Playwright", "FastAPI"],
+                tags: ["Python", "Playwright", "FastAPI", "Browser Automation", "Web Scraping"],
                 image: "/images/searchgpt.png",
                 link: "https://searchbot.live/"
               },
               {
                 title: "Gorilla vs 100Humans",
                 desc: "A fun game where you compete as a gorilla fighting 100 humans.",
-                tags: ["React", "Canvas", "AI Bots"],
+                tags: ["React", "Canvas", "AI Bots", "HTML5", "Nodejs", "2D Web Game"],
                 image: "/images/gorillavs100humans.png",
                 link: "https://www.gorillavs100humans.games/"
               },
               {
                 title: "RedditMastry",
                 desc: "A platform that generates high-impact Reddit posts and strategies to boost engagement.",
-                tags: ["React", "OpenAI", "PostgreSQL"],
+                tags: ["React", "Gemini API", "PostgreSQL", "AI Agents"],
                 image: "/images/redditmastry.png",
                 link: "https://redditmastry.vercel.app/"
               }
             ].map((project, i) => (
               <div 
                 key={i}
-                className="group flex flex-col rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 overflow-hidden transition-all duration-300 hover:translate-y-[-4px]"
+                className={`group flex flex-col rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 overflow-hidden transition-all duration-700 hover:translate-y-[-4px] ${
+                  projectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: projectsVisible ? `${200 + i * 100}ms` : '0ms' }}
               >
                 {/* Image */}
                 <div className="relative h-32 sm:h-36 overflow-hidden bg-[#1a1a1d]">
@@ -257,7 +310,10 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="relative z-10 border-t border-white/5 bg-[#0a0a0b]">
+      <footer 
+        id="contact" 
+        className="relative z-10 border-t border-white/5 bg-[#0a0a0b]"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
           <p className="text-xs sm:text-sm text-zinc-500 text-center sm:text-left">
             Made by <a href="https://priyanshagarwal.me/" target="_blank" rel="noopener noreferrer" className="text-zinc-300 hover:text-indigo-400 transition-colors">Priyansh Agarwal</a>
