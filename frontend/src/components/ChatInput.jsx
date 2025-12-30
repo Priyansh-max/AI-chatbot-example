@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect } from 'react'
 const ChatInput = ({ onSend, disabled }) => {
   const [input, setInput] = useState('')
   const textareaRef = useRef(null)
+  const CHAR_LIMIT = 5000
+  const isNearLimit = input.length > CHAR_LIMIT * 0.9 // Show warning at 90% of limit
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -27,20 +29,31 @@ const ChatInput = ({ onSend, disabled }) => {
   }
 
   return (
-    <div className="border-t border-white/5 p-3 sm:p-4 bg-[#0a0a0b]">
-      <form onSubmit={handleSubmit} className="flex gap-2 sm:gap-3">
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Message..."
-          disabled={disabled}
-          rows={1}
-          maxLength={5000}
-          className="flex-1 px-4 py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-600 resize-none focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 disabled:opacity-50 transition-all leading-5"
-          style={{ height: '44px', minHeight: '44px' }}
-        />
+    <div className="border-t border-white/5 bg-[#0a0a0b]">
+      {isNearLimit && (
+        <div className="px-3 sm:px-4 pt-2 pb-1">
+          <p className="text-[10px] sm:text-xs text-amber-400">
+            {input.length >= CHAR_LIMIT 
+              ? `Max ${CHAR_LIMIT} characters allowed.`
+              : `${CHAR_LIMIT - input.length} characters remaining. Max ${CHAR_LIMIT} characters allowed.`
+            }
+          </p>
+        </div>
+      )}
+      <div className="p-3 sm:p-4">
+        <form onSubmit={handleSubmit} className="flex gap-2 sm:gap-3">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Message..."
+            disabled={disabled}
+            rows={1}
+            maxLength={5000}
+            className="flex-1 px-4 py-3 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-600 resize-none focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 disabled:opacity-50 transition-all leading-5"
+            style={{ height: '44px', minHeight: '44px' }}
+          />
         <button
           type="submit"
           disabled={!input.trim() || disabled}
@@ -58,6 +71,7 @@ const ChatInput = ({ onSend, disabled }) => {
           )}
         </button>
       </form>
+      </div>
     </div>
   )
 }
